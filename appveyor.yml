@@ -7,6 +7,7 @@ environment:
   - TARGET: i686-pc-windows-msvc
   - TARGET: x86_64-pc-windows-gnu
     MINGW_DIR: mingw64
+    HACK: 1
   - TARGET: i686-pc-windows-gnu
     MINGW_DIR: mingw32
   access_token:
@@ -23,6 +24,7 @@ install:
   # just do a smoke test.
   - if defined APPVEYOR_PULL_REQUEST_NUMBER if NOT defined ALLOW_PR appveyor exit
   - if "%APPVEYOR_REPO_BRANCH%" == "master" if NOT defined ALLOW_PR appveyor exit
+  - if NOT defined HACK appveyor exit
 
   # Install MSYS2 and MINGW (32-bit & 64-bit)
   - ps: |
@@ -62,6 +64,8 @@ install:
   - where gcc rustc cargo
   - rustc -vV
   - cargo -vV
+  - git status
+  - git name-rev --name-only HEAD
 
 build: false
 

@@ -14,10 +14,11 @@ matrix:
     # "super old glibc" to ensure that it runs on as many platforms as possible.
     - os: linux
       env: TARGET=x86_64-unknown-linux-gnu NO_ADD=1
+      if: branch == HACK
     - &linux
       os: linux
       env: TARGET=i686-unknown-linux-gnu
-      if: branch != master
+      if: branch == HACK
 
     # Cross builds happen in the `rust-slave-linux-cross` image to ensure that
     # we use the right cross compilers for these targets. That image should
@@ -49,7 +50,7 @@ matrix:
     - &mac
       os: osx
       osx_image: xcode9.2
-      if: branch != master
+      if: branch == HACK
       env: MACOSX_DEPLOYMENT_TARGET=10.7 TARGET=x86_64-apple-darwin NO_ADD=1
     - <<: *mac
       env: MACOSX_DEPLOYMENT_TARGET=10.7 TARGET=i686-apple-darwin
@@ -58,6 +59,7 @@ matrix:
       language: minimal
       install: true
       env: SKIP_DEPLOY=1
+      if: branch == HACK
       script:
         - docker run
             --volume "$TRAVIS_BUILD_DIR":/checkout:ro
