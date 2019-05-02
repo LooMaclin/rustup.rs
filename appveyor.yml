@@ -58,11 +58,13 @@ install:
   # Install the target we're compiling for
   - if NOT "%TARGET%" == "x86_64-pc-windows-msvc" rustup target add %TARGET%
 
+  - where git
+
   # add mingw to PATH if necessary
   - if defined MINGW_DIR set PATH=C:\msys64\%MINGW_DIR%\bin;C:\msys64\usr\bin;%PATH%
 
   # let's see what we got
-  - where gcc rustc cargo
+  - where gcc rustc cargo git
   - rustc -vV
   - cargo -vV
   - git status
