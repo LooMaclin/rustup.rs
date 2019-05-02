@@ -72,3 +72,6 @@ test = false # no unit tests
 [profile.release]
 lto = true
 codegen-units = 1
+
+[patch.crates-io]
+git-testament-derive = { git = "https://github.com/kinnison/git-testament", branch="warn-louder" }
